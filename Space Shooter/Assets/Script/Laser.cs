@@ -12,6 +12,19 @@ public class Laser : MonoBehaviour
         rigidbody.velocity = new Vector2(0, velociaddeY);
     }
 
+    void Update()
+    {
+        // Cria uma variável do tipo Camera, que é atribuida a posição do GameObject com relação a Camera da Unity ao Vector3
+        Camera camera = Camera.main;
+        Vector3 posicaoLaserNaCamera = camera.ViewportToWorldPoint(this.transform.position);
+        
+        if (posicaoLaserNaCamera.y > 1) 
+        {
+            // Verifica se a posição Y do Laser na camêra é maior do que 1 e destrói o GameObject
+            Destroy(this.gameObject, 0.5f);
+        }
+    }
+
     // Método para Colisor IsTrigger - Colidi, mas não há ação da fisica
     public void OnTriggerEnter2D(Collider2D collision)
     {
@@ -21,7 +34,7 @@ public class Laser : MonoBehaviour
         if (collision.CompareTag("Inimigo"))
         {
             Inimigo inimigo = collision.GetComponent<Inimigo>(); // Acessa o script Inimigo e atribuir a variavel o Componente
-            inimigo.Destuir(true); // Usa a variaável para acessar o metodo do sript e destruir o GameObject 
+            inimigo.Destruir(true); // Usa a variaável para acessar o metodo do sript e destruir o GameObject 
             Destroy(this.gameObject); // Destroi o GameObject do laser
         }
     }

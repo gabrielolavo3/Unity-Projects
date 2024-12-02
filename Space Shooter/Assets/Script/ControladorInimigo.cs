@@ -5,7 +5,7 @@ using UnityEngine;
 public class ControladorInimigo : MonoBehaviour
 {
     private float tempoDecorrido;
-    public Inimigo inimigoOriginal;
+    public Inimigo inimigoOriginal; // Variável pública para receber o Sprite do Inimigo no Inspector
 
     void Start()
     {
@@ -28,7 +28,9 @@ public class ControladorInimigo : MonoBehaviour
             Vector2 posicaoMinima = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
             float posicaoX = Random.Range(posicaoMinima.x, posicaoMaxima.x);
 
-            Vector2 posicaoInimigo = new Vector2(posicaoX, posicaoMaxima.y);           
+            Vector2 posicaoInimigo = new Vector2(posicaoX, posicaoMaxima.y);   
+            
+            // Chama o inimigo novamente, passando o Sprite, posição e rotação padrão para 2D
 
             Instantiate(inimigoOriginal, posicaoInimigo, Quaternion.identity);
         }

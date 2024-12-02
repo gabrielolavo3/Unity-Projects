@@ -8,6 +8,7 @@ public class Inimigo : MonoBehaviour
     private float velocidadeY;
     public float velocidadeMinima,
                  velocidadeMaxima;
+    public ParticleSystem particulaExplosaoPrefab; // Variável para atribuir o prefab da particula no Inspector
     
     void Start()
     {
@@ -17,11 +18,23 @@ public class Inimigo : MonoBehaviour
 
     void Update()
     {
+        // Acessa o velocity do Rigidbody2D e passa a posição horizontal(x) como 0, pois o inimigo se move somente na horizontal
+        //  O valor é decrementado pois o inimigo deve se mover para baixo, caindo
         rigidbody.velocity = new Vector2(0, -velocidadeY);
+
+        Camera camera = Camera.main;
+        Vector3 posicaoNaCamera = camera.WorldToViewportPoint(transform.position);
+
+        if (posicaoNaCamera.y < 0) 
+        { 
+            NaveJogador jogador = GameObject.FindGameObjectWithTag("Player").GetComponent<NaveJogador>();
+            jogador.Vida--; // Chama o metodo para decrementar a vida do jogador
+            Destruir(false); // Chama o metodo para destruir o GameObject, mas o parâmetro é false pq o player não destruiu
+        }
     }
 
     // Método para incrementar a pontuação e destruir o GameObject do inimigo
-    public void Destuir(bool derrotado) 
+    public void Destruir(bool derrotado) 
     {
         // O valor bool serve para que a pontuação aumente somente quando o laser atingir o inimigo
         // NaveJogador é false, então a colisão da Nave e Inimigo não aumenta os pontos porque o If analisa se é true
@@ -30,6 +43,11 @@ public class Inimigo : MonoBehaviour
         {
             ControladorPontuacao.Pontuacao++;
         }
+
+        // Criando Instância da Particula, passando o Prefab, a posição do inimigo, a rotação padrão e atribuindo a variável do tipo ParticleSystem
+        ParticleSystem particula =  Instantiate(particulaExplosaoPrefab, transform.position,Quaternion.identity);
+        Debug.Log("Particula Gerada");
+        Destroy(particula.gameObject, 1f); // Destrói a particula após 1 segundo
         Destroy(this.gameObject);
     }
 }
