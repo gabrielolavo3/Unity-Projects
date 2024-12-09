@@ -5,7 +5,8 @@ using UnityEngine;
 public class ControladorInimigo : MonoBehaviour
 {
     private float tempoDecorrido;
-    public Inimigo inimigoOriginal; // Variável pública para receber o Sprite do Inimigo no Inspector
+    public Inimigo inimigoPequenoPrefab; // Variável pública para receber o Sprite do Inimigo no Inspector
+    public Inimigo inimigoGrandePrefab;
 
     void Start()
     {
@@ -28,11 +29,24 @@ public class ControladorInimigo : MonoBehaviour
             Vector2 posicaoMinima = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
             float posicaoX = Random.Range(posicaoMinima.x, posicaoMaxima.x);
 
-            Vector2 posicaoInimigo = new Vector2(posicaoX, posicaoMaxima.y);   
-            
+            Vector2 posicaoInimigo = new Vector2(posicaoX, posicaoMaxima.y);
+
+            Inimigo inimigoPrefab; // Variável do tipo Inimigo para definir o prefab
+            float chanceDeSpaw = Random.Range(0, 100f); // Chance aleatória de 0% a 100% de surgir
+
+            if (chanceDeSpaw <= 25f)
+            {
+                // Caso tenha 25% de surgir, será o inimigo grande
+                inimigoPrefab = inimigoGrandePrefab; 
+            }
+            else 
+            {
+                inimigoPrefab = inimigoPequenoPrefab;
+            }
+
             // Chama o inimigo novamente, passando o Sprite, posição e rotação padrão para 2D
 
-            Instantiate(inimigoOriginal, posicaoInimigo, Quaternion.identity);
+            Instantiate(inimigoPrefab, posicaoInimigo, Quaternion.identity);
         }
     }
 }

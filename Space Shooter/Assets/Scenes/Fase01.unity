@@ -1663,7 +1663,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a2343e1012343b46a15b8ac0a9735b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inimigoOriginal: {fileID: 5522471475359546427, guid: ec858863c3140d544b0a2b2d25538e68, type: 3}
+  inimigoPequenoPrefab: {fileID: 5522471475359546427, guid: ec858863c3140d544b0a2b2d25538e68, type: 3}
+  inimigoGrandePrefab: {fileID: 5522471475359546427, guid: a84fc3bf29c61e54e87cd4e16d4be34b, type: 3}
 --- !u!4 &1400692359
 Transform:
   m_ObjectHideFlags: 0

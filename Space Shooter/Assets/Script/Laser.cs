@@ -34,7 +34,7 @@ public class Laser : MonoBehaviour
         if (collision.CompareTag("Inimigo"))
         {
             Inimigo inimigo = collision.GetComponent<Inimigo>(); // Acessa o script Inimigo e atribuir a variavel o Componente
-            inimigo.Destruir(true); // Usa a variaável para acessar o metodo do sript e destruir o GameObject 
+            inimigo.ReceberDano(); // Usa a variável para acessar o metodo do sript e destruir o GameObject 
             Destroy(this.gameObject); // Destroi o GameObject do laser
         }
     }

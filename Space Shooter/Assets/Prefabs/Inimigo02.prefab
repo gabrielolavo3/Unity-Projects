@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5522471475359546427}
   - component: {fileID: 7275299323070843480}
   m_Layer: 0
-  m_Name: Inimigo01
+  m_Name: Inimigo02
   m_TagString: Inimigo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 97732da1d8cf7f04da5a4b08935b0efd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9262fdaac2353be4dbc00e1bdede8166, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -127,10 +127,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 2110619304984967569}
-  quantVidaInimigo: 1
-  velocidadeMinima: 2
-  velocidadeMaxima: 3
-  particulaExplosaoPrefab: {fileID: 7870409175845499334, guid: 7ec101282a434c9479bbbe64e9febc2e, type: 3}
+  quantVidaInimigo: 5
+  velocidadeMinima: 1
+  velocidadeMaxima: 1.5
+  particulaExplosaoPrefab: {fileID: 7870409175845499334, guid: 311a5d897cb305f43ae0a124d3d9f6ed, type: 3}
 --- !u!58 &7275299323070843480
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -165,4 +165,4 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.12
+  m_Radius: 0.23

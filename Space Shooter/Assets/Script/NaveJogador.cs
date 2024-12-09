@@ -61,7 +61,7 @@ public class NaveJogador : MonoBehaviour
             { 
                 vidas = 0;
                 gameObject.SetActive(false); // Desativa o Inspector do Jogador
-                telaGamerOver.Exibir(); // Chama o método para mostara a Tela de Gamer Over, pois a vida do Player zerou
+                telaGamerOver.Exibir(); // Chama o método para mostrará a Tela de Gamer Over, pois a vida do Player zerou
             }
         }
     }
@@ -74,12 +74,13 @@ public class NaveJogador : MonoBehaviour
             Vida--; // Decrementa a vida pois há um Set na Propriedade de Acesso
             Debug.Log("Vida atual " + Vida);
             Inimigo inimigo = collision.GetComponent<Inimigo>();
-            inimigo.Destruir(false);
+            inimigo.ReceberDano();
         }
     }
 
     private void Atirar() 
     {
+        // Cria uma instância do Prefab do laser, na posição atual do array da arma
         Instantiate(laserPrefab, armaAtual.position, Quaternion.identity);
 
         // Realizando mudança de uso da arma de disparo, entre arma 1 e 2

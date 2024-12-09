@@ -6,6 +6,7 @@ public static class ControladorPontuacao
 {
     private static int pontuacao;
 
+    // Método getter e setter
     public static int Pontuacao
     {
         get 

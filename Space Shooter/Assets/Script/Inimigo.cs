@@ -5,6 +5,7 @@ using UnityEngine;
 public class Inimigo : MonoBehaviour
 {
     public new Rigidbody2D rigidbody;
+    public int quantVidaInimigo; // Variável para definir a quantidade de vida
     private float velocidadeY;
     public float velocidadeMinima,
                  velocidadeMaxima;
@@ -33,8 +34,17 @@ public class Inimigo : MonoBehaviour
         }
     }
 
+    public void ReceberDano()
+    {
+        quantVidaInimigo--; // Decrementar 1 ponto de vida o inimigo
+        if (quantVidaInimigo <= 0) 
+        {
+            Destruir(true);
+        }
+    }
+
     // Método para incrementar a pontuação e destruir o GameObject do inimigo
-    public void Destruir(bool derrotado) 
+    private void Destruir(bool derrotado) 
     {
         // O valor bool serve para que a pontuação aumente somente quando o laser atingir o inimigo
         // NaveJogador é false, então a colisão da Nave e Inimigo não aumenta os pontos porque o If analisa se é true
