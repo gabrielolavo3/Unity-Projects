@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BarraDeVida : MonoBehaviour
 {
-    public GameObject[] pontosVermelhos;
+    public GameObject[] pontosVermelhos; // Array para adicionar o Sprite do GameObject
     
     public void ExibirVidas(int quantVida) 
     {
@@ -18,7 +18,7 @@ public class BarraDeVida : MonoBehaviour
             }
             else 
             {
-                // Caso mentira, desativa a barra de vida
+                // Caso mentira, desativa gradualmemte os pontos da barra de vida
                 pontosVermelhos[a].gameObject.SetActive(false);
             }
         } 

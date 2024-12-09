@@ -5,7 +5,7 @@ using UnityEngine;
 public class Inimigo : MonoBehaviour
 {
     public new Rigidbody2D rigidbody;
-    public int quantVidaInimigo; // Variável para definir a quantidade de vida
+    public int quantVidaInimigo; // Variável para definir a quantidade de vida no inspecto
     private float velocidadeY;
     public float velocidadeMinima,
                  velocidadeMaxima;
@@ -34,6 +34,7 @@ public class Inimigo : MonoBehaviour
         }
     }
 
+    // Método para retirar a vida do inimigo através da colisão de outros GameObjects
     public void ReceberDano()
     {
         quantVidaInimigo--; // Decrementar 1 ponto de vida o inimigo
@@ -58,6 +59,6 @@ public class Inimigo : MonoBehaviour
         ParticleSystem particula =  Instantiate(particulaExplosaoPrefab, transform.position,Quaternion.identity);
         Debug.Log("Particula Gerada");
         Destroy(particula.gameObject, 1f); // Destrói a particula após 1 segundo
-        Destroy(this.gameObject);
+        Destroy(this.gameObject); // Destrói o GameObject do Inimigo
     }
 }
