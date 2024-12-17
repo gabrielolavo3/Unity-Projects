@@ -131,6 +131,7 @@ MonoBehaviour:
   velocidadeMinima: 2
   velocidadeMaxima: 3
   particulaExplosaoPrefab: {fileID: 7870409175845499334, guid: 7ec101282a434c9479bbbe64e9febc2e, type: 3}
+  spriteRenderer: {fileID: 8800017773826845640}
 --- !u!58 &7275299323070843480
 CircleCollider2D:
   m_ObjectHideFlags: 0

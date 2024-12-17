@@ -10,9 +10,30 @@ public class Inimigo : MonoBehaviour
     public float velocidadeMinima,
                  velocidadeMaxima;
     public ParticleSystem particulaExplosaoPrefab; // Variável para atribuir o prefab da particula no Inspector
-    
+    public SpriteRenderer spriteRenderer; // Variável para atribuir o prefab de cada inimigo com o Script
+
     void Start()
     {
+        Vector2 posicaoAtual = this.transform.position; // Obtém a posição no eixo X e Y do Player
+        float metadeDaLargura = Largura / 2f; // Cálculo para mover o centro do Sprite, posteriormente, para esquerda ou direita
+        float pontoReferenciaEsquerdo = posicaoAtual.x - metadeDaLargura; 
+        float pontoReferenciaDireito = posicaoAtual.x + metadeDaLargura;
+
+        Camera cam = Camera.main; // Pega a camêra do game
+        Vector2 limiteInferiorEsquerdo = cam.ViewportToWorldPoint(Vector2.zero);
+        Vector2 limiteSuperiorDireito = cam.ViewportToWorldPoint(Vector2.one);
+
+        if (pontoReferenciaEsquerdo < limiteInferiorEsquerdo.x) // Saindo pela esquerda
+        {
+            float posicaoX = limiteInferiorEsquerdo.x + metadeDaLargura; //Soma para fazer o Inimigo voltar ao limite da visão caso saia pela esquerda
+            this.transform.position = new Vector2(posicaoX, posicaoAtual.y); // Atualiza a posição do jogador, passando a posicaoX e mantendo a posição Y
+        }
+        else if (pontoReferenciaDireito > limiteSuperiorDireito.x) 
+        { 
+            float posicaoX = limiteSuperiorDireito.x - metadeDaLargura; //Subtração para fazer o Inimigo voltar ao limite da visão caso saia pela esquerda
+            this.transform.position = new Vector2(posicaoX, posicaoAtual.y);
+        }
+
         // Gerando um número aleatório entre o valor minimo e maximo definido
         velocidadeY = Random.Range(velocidadeMinima, velocidadeMaxima);
     }
@@ -41,6 +62,17 @@ public class Inimigo : MonoBehaviour
         if (quantVidaInimigo <= 0) 
         {
             Destruir(true);
+        }
+    }
+
+    // Propriedade Getter
+    private float Largura
+    {
+        get 
+        { 
+            Bounds bounds = spriteRenderer.bounds; // O Bounds retorna as dimensões de um sprite 
+            Vector3 tamanho = bounds.size; // Obtém as dimensões X (Altura), Y (Largura) e Z (Profundidade)
+            return tamanho.y;
         }
     }
 
