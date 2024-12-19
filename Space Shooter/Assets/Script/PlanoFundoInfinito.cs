@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlanoFundoInfinito : MonoBehaviour
 {
-    public Renderer renderer;
+    public new Renderer renderer;
     public float velocidade;
     private Material material;
     private Vector2 offsetMaterial;

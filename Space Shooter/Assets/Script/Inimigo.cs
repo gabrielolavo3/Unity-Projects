@@ -11,6 +11,8 @@ public class Inimigo : MonoBehaviour
                  velocidadeMaxima;
     public ParticleSystem particulaExplosaoPrefab; // Variável para atribuir o prefab da particula no Inspector
     public SpriteRenderer spriteRenderer; // Variável para atribuir o prefab de cada inimigo com o Script
+    [SerializeField] [Range(0, 100)] private float chanceSoltarItemVida; // O [Range(0, 100)] permite escolher um valor dentro do intervalo minímo (0) e máximo (100) no inspetor
+    [SerializeField] private ItemVida itemVidaPrefab; // Variável privada para aparece no inspecto por causa do SerializeField
 
     void Start()
     {
@@ -20,17 +22,17 @@ public class Inimigo : MonoBehaviour
         float pontoReferenciaDireito = posicaoAtual.x + metadeDaLargura;
 
         Camera cam = Camera.main; // Pega a camêra do game
-        Vector2 limiteInferiorEsquerdo = cam.ViewportToWorldPoint(Vector2.zero);
+        Vector2 limiteInferiorEsquerdo = cam.ViewportToWorldPoint(Vector2.zero); // Conversão de coordenadas do ViewPort para o lado Esquerdo e Inferior, passando um array de 2 posições: 0, 0
         Vector2 limiteSuperiorDireito = cam.ViewportToWorldPoint(Vector2.one);
 
         if (pontoReferenciaEsquerdo < limiteInferiorEsquerdo.x) // Saindo pela esquerda
         {
-            float posicaoX = limiteInferiorEsquerdo.x + metadeDaLargura; //Soma para fazer o Inimigo voltar ao limite da visão caso saia pela esquerda
+            float posicaoX = limiteInferiorEsquerdo.x + metadeDaLargura; // Soma para fazer o Inimigo voltar ao limite da visão caso saia pela esquerda
             this.transform.position = new Vector2(posicaoX, posicaoAtual.y); // Atualiza a posição do jogador, passando a posicaoX e mantendo a posição Y
         }
         else if (pontoReferenciaDireito > limiteSuperiorDireito.x) 
         { 
-            float posicaoX = limiteSuperiorDireito.x - metadeDaLargura; //Subtração para fazer o Inimigo voltar ao limite da visão caso saia pela esquerda
+            float posicaoX = limiteSuperiorDireito.x - metadeDaLargura; // Subtração para fazer o Inimigo voltar ao limite da visão caso saia pela esquerda
             this.transform.position = new Vector2(posicaoX, posicaoAtual.y);
         }
 
@@ -85,6 +87,7 @@ public class Inimigo : MonoBehaviour
         if (derrotado)
         {
             ControladorPontuacao.Pontuacao++;
+            SoltarItemVida();
         }
 
         // Criando Instância da Particula, passando o Prefab, a posição do inimigo, a rotação padrão e atribuindo a variável do tipo ParticleSystem
@@ -92,5 +95,17 @@ public class Inimigo : MonoBehaviour
         Debug.Log("Particula Gerada");
         Destroy(particula.gameObject, 1f); // Destrói a particula após 1 segundo
         Destroy(this.gameObject); // Destrói o GameObject do Inimigo
+    }
+
+    // Método para dropar o item com base numa chance aleatória. Verifica se o valor sortedo equivale ao valor definido na Unity com chanceSoltarItemVida
+    private void SoltarItemVida() 
+    { 
+        float chanceAleatoria = Random.Range(0f, 100f);
+
+        if (chanceAleatoria <= chanceSoltarItemVida)
+        {
+            // Cria uma instância do Prefab do ItemVida na posição que o inimigo foi derrotado
+            Instantiate(itemVidaPrefab, transform.position, Quaternion.identity);
+        }
     }
 }

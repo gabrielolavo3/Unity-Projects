@@ -7,11 +7,14 @@ using UnityEngine.SceneManagement; // Biblioteca que controla as cenas da Unity
 public class GamerOver : MonoBehaviour
 {
     public Text textoPontuacaoFinal;
+    public Text textoMelhorPontuacao;
     
     public void Exibir() 
     { 
         gameObject.SetActive(true); // Ativa o gameObject que o Script está conectado = GamerOver
         textoPontuacaoFinal.text = ControladorPontuacao.Pontuacao + "x";
+        textoMelhorPontuacao.text = ControladorPontuacao.MelhorPontuacao.ToString(); // Exibir a melhor pontuação na interface e converte para um String        
+
         Time.timeScale = 0; // Pausa o tempo da Unity
     }
 

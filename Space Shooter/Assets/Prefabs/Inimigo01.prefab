@@ -132,6 +132,8 @@ MonoBehaviour:
   velocidadeMaxima: 3
   particulaExplosaoPrefab: {fileID: 7870409175845499334, guid: 7ec101282a434c9479bbbe64e9febc2e, type: 3}
   spriteRenderer: {fileID: 8800017773826845640}
+  chanceSoltarItemVida: 5
+  itemVidaPrefab: {fileID: 7410922684026823658, guid: a1f6b428a594a3b4eb64c19303e118a1, type: 3}
 --- !u!58 &7275299323070843480
 CircleCollider2D:
   m_ObjectHideFlags: 0

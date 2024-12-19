@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class NaveJogador : MonoBehaviour
 {
-    public new Rigidbody2D rigidbody; // Atributo do tipo Rigidbody2D para Fisica2D
-    public Laser laserPrefab; // variável para indicar o Sprite do Laser no Inspector
-    public float velocidadeMovimento; // Variável para inserir o valor no Inspector
-    public float tempoDeEsperaDotiro; // Variável para inserir o valor no Inspector
-    private float intervaloTiro;
-    public Transform[] posicaoArma; // Array para obter o position de cada arma
-    private Transform armaAtual;
+    private const int QuantidadeMaximaVida = 5;
+    public new Rigidbody2D rigidbody; // Atributo do tipo Rigidbody2D para Fisica2D    
+    public float velocidadeMovimento; // Variável para inserir o valor no Inspector    
     private int vidas;
     private GamerOver telaGamerOver;
     public SpriteRenderer spriteRenderer; // Variável para obter o Sprite do Jogador
@@ -19,10 +15,9 @@ public class NaveJogador : MonoBehaviour
     void Start()
     {
         Debug.Log("Imprimindo no console da Unity e usando o método Start");
-        intervaloTiro = 0;
-        armaAtual = posicaoArma[0]; // Defini a posição da 1ª arma
+        
         ControladorPontuacao.Pontuacao = 0; // Define a pontuação para 0 ao iniciar o jogo
-        vidas = 5;        
+        vidas = QuantidadeMaximaVida;        
         GameObject gamerOverObject = GameObject.FindGameObjectWithTag("Gamer Over"); // Variável GameObject para buscar o 1º GameObject com a Tag "Gamer Over"        
         telaGamerOver = gamerOverObject.GetComponent<GamerOver>(); // Variável do tipo GamerOver recebendo o GameObject com a Tag e buscando o componente
         telaGamerOver.EsconderTela(); // Chama metodo para desativar a tela de GamerOver no inicio do Play
@@ -31,17 +26,7 @@ public class NaveJogador : MonoBehaviour
     // Update é chamado a cada frame
     void Update()
     {
-        // Adiciona o tempo passado na Unity
-        intervaloTiro += Time.deltaTime;
-
-        // Analisa se o tempo de intervaloTiro é maior do que tempoDeEsperaDotiro(definido no inspecto)
-        if (intervaloTiro >= tempoDeEsperaDotiro)
-        {
-            // Zera o intervaloTiro e chama o método atirar, que irá mudar a posição a arma a cada chamada do Update
-            intervaloTiro = 0;
-            Atirar();
-        }
-
+        /*
         // Trecho que controla a movimentação do Player
         float horizontal = Input.GetAxis("Horizontal"), // Recebe o clique das teclas A e D, do eixo horizontal
               vertical = Input.GetAxis("Vertical"), // Recebe o clique das teclas W e S, do eixo vertical
@@ -49,7 +34,7 @@ public class NaveJogador : MonoBehaviour
               velocidadeY = vertical * this.velocidadeMovimento;
 
         this.rigidbody.velocity = new Vector2(velocidadeX, velocidadeY); // Acessa a propriedade velocity de Rigidbody2D e passar um new Vector2 que recebe a posicao X e Y
-        
+        */
         VerificarLimiteDaTela();
     }
 
@@ -125,7 +110,12 @@ public class NaveJogador : MonoBehaviour
         set 
         {
             this.vidas = value;
-            if (vidas <= 0) 
+
+            if (vidas >= QuantidadeMaximaVida) // Verificação para impedir que o Jogador tenha mais do que o permitido
+            { 
+                vidas = QuantidadeMaximaVida;
+            }
+            else if (vidas <= 0) 
             { 
                 vidas = 0;
                 gameObject.SetActive(false); // Desativa o Inspector do Jogador
@@ -145,21 +135,11 @@ public class NaveJogador : MonoBehaviour
             Inimigo inimigo = collision.GetComponent<Inimigo>();
             inimigo.ReceberDano(); // Chama o método do script inimigo para retirar ponto de vida o Inimigo com a colisão entre o Player
         }
-    }
-
-    private void Atirar() 
-    {
-        // Cria uma instância do Prefab do laser, na posição atual do array da arma
-        Instantiate(laserPrefab, armaAtual.position, Quaternion.identity);
-
-        // Realizando mudança de uso da arma de disparo, entre arma 1 e 2
-        if (armaAtual == posicaoArma[0]) 
-        {
-            armaAtual = posicaoArma[1];
+        else if (collision.CompareTag("ItemVida")) // Verifica colisão do Player com o item
+        { 
+            ItemVida itemVida = collision.GetComponent<ItemVida>(); // Acessa diretamente o Script ItemVida com todas as configurações e dados
+            Vida += itemVida.QuantidadeVida; // Incrementa a propriedade da vida do Player com a QuantidadeVida que o item recupera do usuário
+            itemVida.ColetarItem(); // Chama o método para destruir o item após a colisão com o Player
         }
-        else
-        {
-            armaAtual = posicaoArma[0];
-        }
-    }
+    }    
 }
