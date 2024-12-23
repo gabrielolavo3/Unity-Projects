@@ -134,6 +134,10 @@ MonoBehaviour:
   spriteRenderer: {fileID: 8800017773826845640}
   chanceSoltarItemVida: 5
   itemVidaPrefab: {fileID: 7410922684026823658, guid: a1f6b428a594a3b4eb64c19303e118a1, type: 3}
+  chanceSoltarPowerUp: 7
+  powerUpPrefabs:
+  - {fileID: 1422126323181788061, guid: 0ca9bf5ad4b8cdb47a46ad78d9db8e1b, type: 3}
+  - {fileID: 2350195007951079858, guid: 66688f359b6856c43b3f97a11c37e55c, type: 3}
 --- !u!58 &7275299323070843480
 CircleCollider2D:
   m_ObjectHideFlags: 0

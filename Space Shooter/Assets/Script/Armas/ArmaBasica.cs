@@ -35,4 +35,14 @@ public abstract class ArmaBasica : MonoBehaviour
     }
 
     protected abstract void Atirar(); // O uso do abstract permite a alteração em classes que herdam dessa
+
+    public void Desativar() 
+    { 
+        gameObject.SetActive(false);
+    }
+
+    public void Ativar()
+    {
+        gameObject.SetActive(true);
+    }
 }

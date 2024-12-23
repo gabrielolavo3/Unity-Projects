@@ -11,8 +11,11 @@ public class Inimigo : MonoBehaviour
                  velocidadeMaxima;
     public ParticleSystem particulaExplosaoPrefab; // Variável para atribuir o prefab da particula no Inspector
     public SpriteRenderer spriteRenderer; // Variável para atribuir o prefab de cada inimigo com o Script
+
     [SerializeField] [Range(0, 100)] private float chanceSoltarItemVida; // O [Range(0, 100)] permite escolher um valor dentro do intervalo minímo (0) e máximo (100) no inspetor
     [SerializeField] private ItemVida itemVidaPrefab; // Variável privada para aparece no inspecto por causa do SerializeField
+    [SerializeField] [Range(0, 100)] private float chanceSoltarPowerUp;
+    [SerializeField] private PowerUpColetavel[] powerUpPrefabs; // Recebe uma coleção de prefabs
 
     void Start()
     {
@@ -86,8 +89,9 @@ public class Inimigo : MonoBehaviour
         // Laser é true, então a colisão da Nave e Inimigo aumenta os pontos
         if (derrotado)
         {
-            ControladorPontuacao.Pontuacao++;
+            ControladorPontuacao.Pontuacao++; // Aumenta pontuação
             SoltarItemVida();
+            SoltarPowerUp();
         }
 
         // Criando Instância da Particula, passando o Prefab, a posição do inimigo, a rotação padrão e atribuindo a variável do tipo ParticleSystem
@@ -97,7 +101,7 @@ public class Inimigo : MonoBehaviour
         Destroy(this.gameObject); // Destrói o GameObject do Inimigo
     }
 
-    // Método para dropar o item com base numa chance aleatória. Verifica se o valor sortedo equivale ao valor definido na Unity com chanceSoltarItemVida
+    // Método para dropar o item com base numa chance aleatória. Verifica se o valor sorteado equivale ao valor definido na Unity com chanceSoltarItemVida
     private void SoltarItemVida() 
     { 
         float chanceAleatoria = Random.Range(0f, 100f);
@@ -106,6 +110,17 @@ public class Inimigo : MonoBehaviour
         {
             // Cria uma instância do Prefab do ItemVida na posição que o inimigo foi derrotado
             Instantiate(itemVidaPrefab, transform.position, Quaternion.identity);
+        }
+    }
+
+    private void SoltarPowerUp()
+    {
+        float chanceAleatoria = Random.Range(0f, 100f);
+
+        if (chanceAleatoria <= chanceSoltarPowerUp)
+        {
+            int indiceAleatorioPowerUp = Random.Range(0, powerUpPrefabs.Length); // Gera um valor aleatório para escolher qual será o PowerUp dropado
+            Instantiate(powerUpPrefabs[indiceAleatorioPowerUp], transform.position, Quaternion.identity); // Cria o PowerUp de acordo com a posição aleatória do indice
         }
     }
 }

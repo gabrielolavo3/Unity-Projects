@@ -24,7 +24,7 @@ public class ArmaDisparoAlternado : ArmaBasica // Uso de herança (POO C#)
         }
         else 
         {
-            posicaoProximoDisparo = posicaoDisparo[1];
+            posicaoProximoDisparo = posicaoDisparo[0];
         }
     }
 }

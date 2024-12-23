@@ -10,6 +10,7 @@ public class NaveJogador : MonoBehaviour
     private int vidas;
     private GamerOver telaGamerOver;
     public SpriteRenderer spriteRenderer; // Variável para obter o Sprite do Jogador
+    [SerializeField] private ControladorArma controladorArma;
 
     // Start é chamado uma única vez antes do primeiro frame
     void Start()
@@ -21,6 +22,8 @@ public class NaveJogador : MonoBehaviour
         GameObject gamerOverObject = GameObject.FindGameObjectWithTag("Gamer Over"); // Variável GameObject para buscar o 1º GameObject com a Tag "Gamer Over"        
         telaGamerOver = gamerOverObject.GetComponent<GamerOver>(); // Variável do tipo GamerOver recebendo o GameObject com a Tag e buscando o componente
         telaGamerOver.EsconderTela(); // Chama metodo para desativar a tela de GamerOver no inicio do Play
+
+        EquiparArmaDisparoAlternado(); // Defini a arma de ínicio
     }
 
     // Update é chamado a cada frame
@@ -36,6 +39,18 @@ public class NaveJogador : MonoBehaviour
         this.rigidbody.velocity = new Vector2(velocidadeX, velocidadeY); // Acessa a propriedade velocity de Rigidbody2D e passar um new Vector2 que recebe a posicao X e Y
         */
         VerificarLimiteDaTela();
+    }
+
+    // Métodos para mudar a arma e permite acesso do PowerUp às armas, mesmo sem acesso ao ControladorArmas
+
+    public void EquiparArmaDisparoAlternado()
+    {
+        this.controladorArma.EquiparArmaDisparoAlternado();
+    }
+
+    public void EquiparArmaDisparoDuplo()
+    {
+        this.controladorArma.EquiparArmaDisparoDuplo();
     }
 
     private void VerificarLimiteDaTela() 
@@ -124,22 +139,44 @@ public class NaveJogador : MonoBehaviour
         }
     }
 
-    // Método para a colisão entre o Jogador e o Inimigo
+    // Método para analisar as colisões do Jogador
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Compara se o Jogador colidiu com um GameObject com a Tag "Inimigo"
         if (collision.CompareTag("Inimigo")) 
-        {
-            Vida--; // Decrementa a vida pois há um Set na Propriedade de Acesso
-            Debug.Log("Vida atual " + Vida);
+        {            
             Inimigo inimigo = collision.GetComponent<Inimigo>();
-            inimigo.ReceberDano(); // Chama o método do script inimigo para retirar ponto de vida o Inimigo com a colisão entre o Player
+            ColisaoInimigo(inimigo);
+
         }
         else if (collision.CompareTag("ItemVida")) // Verifica colisão do Player com o item
         { 
             ItemVida itemVida = collision.GetComponent<ItemVida>(); // Acessa diretamente o Script ItemVida com todas as configurações e dados
-            Vida += itemVida.QuantidadeVida; // Incrementa a propriedade da vida do Player com a QuantidadeVida que o item recupera do usuário
-            itemVida.ColetarItem(); // Chama o método para destruir o item após a colisão com o Player
+            ColetarItemVida(itemVida);
+        }
+        else if (collision.CompareTag("PowerUpDisparo")) 
+        { 
+            PowerUpColetavel powerUp = collision.GetComponent<PowerUpColetavel>();
+            ColetarPowerUpDisparoDuplo(powerUp);
         }
     }    
+
+    private void ColisaoInimigo(Inimigo inimigo) 
+    {
+        Vida--; // Decrementa a vida pois há um Set na Propriedade de Acesso        
+        inimigo.ReceberDano(); // Chama o método do script inimigo para retirar ponto de vida o Inimigo com a colisão entre o Player
+    }
+
+    private void ColetarItemVida(ItemVida itemVida)
+    {
+        Vida += itemVida.QuantidadeVida; // Incrementa a propriedade da vida do Player com a QuantidadeVida que o item recupera do usuário
+        itemVida.ColetarItem(); // Chama o método para destruir o item após a colisão com o Player
+    }
+    
+    private void ColetarPowerUpDisparoDuplo(PowerUpColetavel powerUp) // Variável para acessar a lista de powerUps
+    { 
+        EfeitoPowerUp efeitoPowerUp = powerUp.EfeitoPowerUp; 
+        efeitoPowerUp.AplicarEfeito(this); // Aplica o efeito no script do Jogador com o uso do This
+        powerUp.ColetarPowerUp();
+    }
 }
