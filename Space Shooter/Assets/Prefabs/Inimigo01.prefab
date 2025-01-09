@@ -138,6 +138,7 @@ MonoBehaviour:
   powerUpPrefabs:
   - {fileID: 1422126323181788061, guid: 0ca9bf5ad4b8cdb47a46ad78d9db8e1b, type: 3}
   - {fileID: 2350195007951079858, guid: 66688f359b6856c43b3f97a11c37e55c, type: 3}
+  - {fileID: 162331733925904197, guid: dc226aa00543d1c48b7156c3642da3df, type: 3}
 --- !u!58 &7275299323070843480
 CircleCollider2D:
   m_ObjectHideFlags: 0

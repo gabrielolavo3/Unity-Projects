@@ -11,6 +11,7 @@ public class NaveJogador : MonoBehaviour
     private GamerOver telaGamerOver;
     public SpriteRenderer spriteRenderer; // Variável para obter o Sprite do Jogador
     [SerializeField] private ControladorArma controladorArma;
+    [SerializeField] private Escudo escudo;
 
     // Start é chamado uma única vez antes do primeiro frame
     void Start()
@@ -24,6 +25,7 @@ public class NaveJogador : MonoBehaviour
         telaGamerOver.EsconderTela(); // Chama metodo para desativar a tela de GamerOver no inicio do Play
 
         EquiparArmaDisparoAlternado(); // Defini a arma de ínicio
+        escudo.DesativarEscudo();
     }
 
     // Update é chamado a cada frame
@@ -52,6 +54,11 @@ public class NaveJogador : MonoBehaviour
     {
         this.controladorArma.EquiparArmaDisparoDuplo();
     }
+
+    public void AtivandoEscudo() 
+    {
+        escudo.AtivarEscudo();
+    }   
 
     private void VerificarLimiteDaTela() 
     { 
@@ -154,7 +161,7 @@ public class NaveJogador : MonoBehaviour
             ItemVida itemVida = collision.GetComponent<ItemVida>(); // Acessa diretamente o Script ItemVida com todas as configurações e dados
             ColetarItemVida(itemVida);
         }
-        else if (collision.CompareTag("PowerUpDisparo")) 
+        else if (collision.CompareTag("PowerUp")) 
         { 
             PowerUpColetavel powerUp = collision.GetComponent<PowerUpColetavel>();
             ColetarPowerUpDisparoDuplo(powerUp);
@@ -163,7 +170,15 @@ public class NaveJogador : MonoBehaviour
 
     private void ColisaoInimigo(Inimigo inimigo) 
     {
-        Vida--; // Decrementa a vida pois há um Set na Propriedade de Acesso        
+        if (escudo.VerificarEscudoAtivo) 
+        {
+            escudo.ReceberDano();
+        }
+        else 
+        {
+            Vida--; // Decrementa a vida pois há um Set na Propriedade de Acesso        
+        }
+        
         inimigo.ReceberDano(); // Chama o método do script inimigo para retirar ponto de vida o Inimigo com a colisão entre o Player
     }
 
