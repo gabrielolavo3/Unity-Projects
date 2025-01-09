@@ -4,10 +4,11 @@ using UnityEngine;
 
 public abstract class PowerUpColetavel : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer spriteRenderer;    
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private float intervaloTempoAntesAutodestruicao; // Defini quanto tempo deve passar antes de iniciar a autodestruição
     [SerializeField] private int quantidadeTotalDePiscadas; // Defini quantas vezes o Sprite do PowerUp irá piscar antes da desaparecer
     [SerializeField] private float intervaloTempoEntrePiscadas; // Defini o tempo total para implementar todas as piscadas
-    [SerializeField] private float intervaloTempoAntesAutodestruicao; // Defini quanto tempo deve passar antes de iniciar a autodestruição
+    [SerializeField] private float reducaoTempoEntrePiscadas;
     private float contagemTempoAntesAutodestruicao; // Valor para verificar quanto tempo passou para começar a autodestruição
     private bool autodestruindo;
 
@@ -25,7 +26,7 @@ public abstract class PowerUpColetavel : MonoBehaviour
 
     private void Update()
     {
-        if (autodestruindo) 
+        if (!this.autodestruindo) // Caso não esteja audestruindo
         { 
             contagemTempoAntesAutodestruicao += Time.deltaTime; // Inicia a contagem para ativar a autodestruição do PowerUp
             if (contagemTempoAntesAutodestruicao >= intervaloTempoAntesAutodestruicao) // Analisa se a contagem de tempo que passou é igual ao tempo definido para iniciar a autodestruição
@@ -53,7 +54,7 @@ public abstract class PowerUpColetavel : MonoBehaviour
         do
         {
             // Condicional para ativar e desativar o SpriteRenderer do PowerUp
-            if (spriteRenderer.enabled == true)
+            if (spriteRenderer.enabled) // Enabled retornar se um sprite está ativado
             {
                 spriteRenderer.enabled = false;
             }
@@ -62,11 +63,11 @@ public abstract class PowerUpColetavel : MonoBehaviour
                 spriteRenderer.enabled = true;
             }
 
-            yield return new WaitForSeconds(intervaloTempoEntrePiscadas); // Pausa de execução por um tempo em segundos
-
+            yield return new WaitForSeconds(intervaloTempoEntrePiscadas); // Retornar um tempo em segundos e pausa a execução para depois seguir a execução 
             contador++;
-        }
-        while (contador < quantidadeTotalDePiscadas);
+            intervaloTempoEntrePiscadas -= contador * reducaoTempoEntrePiscadas; 
+        
+        } while (contador < quantidadeTotalDePiscadas);
 
         Destroy(gameObject);
     }

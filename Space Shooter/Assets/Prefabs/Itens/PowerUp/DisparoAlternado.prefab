@@ -134,6 +134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 5560935179475966778}
-  quantidadeTotalDePiscadas: 15
-  intervaloTempoEntrePiscadas: 1
   intervaloTempoAntesAutodestruicao: 5
+  quantidadeTotalDePiscadas: 15
+  intervaloTempoEntrePiscadas: 0.4
+  reducaoTempoEntrePiscadas: 0.005
