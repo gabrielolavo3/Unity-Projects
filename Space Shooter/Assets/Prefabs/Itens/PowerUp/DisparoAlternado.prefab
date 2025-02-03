@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1422126323181788061}
   m_Layer: 0
   m_Name: DisparoAlternado
-  m_TagString: PowerUpDisparo
+  m_TagString: PowerUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,3 +138,4 @@ MonoBehaviour:
   quantidadeTotalDePiscadas: 15
   intervaloTempoEntrePiscadas: 0.4
   reducaoTempoEntrePiscadas: 0.005
+  duracaoEmSegundos: 10

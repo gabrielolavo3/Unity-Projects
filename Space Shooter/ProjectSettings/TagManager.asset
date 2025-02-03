@@ -8,7 +8,6 @@ TagManager:
   - Gamer Over
   - ItemVida
   - PowerUp
-  - PowerUpDisparo
   layers:
   - Default
   - TransparentFX

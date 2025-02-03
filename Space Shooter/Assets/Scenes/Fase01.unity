@@ -852,6 +852,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 591532637}
   m_CullTransparentMesh: 1
+--- !u!1 &597005920
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 597005921}
+  m_Layer: 0
+  m_Name: Arma03
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &597005921
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 597005920}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.004, y: 0.16, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 995437317}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &644264016
 GameObject:
   m_ObjectHideFlags: 0
@@ -1570,6 +1601,7 @@ Transform:
   m_Children:
   - {fileID: 1304792978}
   - {fileID: 1106735591}
+  - {fileID: 597005921}
   m_Father: {fileID: 644264020}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1073271025
@@ -2464,6 +2496,7 @@ Transform:
   m_Children:
   - {fileID: 1073271026}
   - {fileID: 1138147639}
+  - {fileID: 2032849997}
   m_Father: {fileID: 644264020}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1831585528
@@ -2480,6 +2513,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   armaDisparoAlternado: {fileID: 1073271027}
   armaDisparoDuplo: {fileID: 1138147640}
+  armaDisparoEspalhado: {fileID: 2032849998}
 --- !u!1 &1869371681
 GameObject:
   m_ObjectHideFlags: 0
@@ -2790,6 +2824,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1988397405}
   m_CullTransparentMesh: 1
+--- !u!1 &2032849996
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2032849997}
+  - component: {fileID: 2032849998}
+  m_Layer: 0
+  m_Name: ArmaDisparoEspalhado
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2032849997
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2032849996}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1831585527}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2032849998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2032849996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ce879bf470991b47b06fb00b52dee61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  laserPrefab: {fileID: 6302988833423833446, guid: 2366cc5aa700bb84081d93785d912ee9, type: 3}
+  tempoDeEsperaDotiro: 0.15
+  posicaoDisparo:
+  - {fileID: 597005921}
+  anguloEntreDisparo: 5
+  quantidadeDisparos: 5
 --- !u!1 &2034193539
 GameObject:
   m_ObjectHideFlags: 0
@@ -2931,7 +3015,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ffcb2a26f8833d47bae48e29130cad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  protecaoTotal: 0
+  protecaoTotal: 3
 --- !u!212 &2134380366
 SpriteRenderer:
   m_ObjectHideFlags: 0

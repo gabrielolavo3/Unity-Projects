@@ -6,6 +6,7 @@ public class ControladorArma : MonoBehaviour
 {
     [SerializeField] private ArmaDisparoAlternado armaDisparoAlternado;
     [SerializeField] private ArmaDisparoDuplo armaDisparoDuplo;
+    [SerializeField] private ArmaDisparoEspalhado armaDisparoEspalhado;
     private ArmaBasica armaAtual;
 
     private void Awake() // O Awake é executado antes de qualquer Start. É necessário para desativar as armas antes da execução dos Starts
@@ -22,6 +23,11 @@ public class ControladorArma : MonoBehaviour
     public void EquiparArmaDisparoDuplo()
     {
         this.ArmaAtual = this.armaDisparoDuplo;
+    }
+
+    public void EquiparArmaDisparoEspalhado() 
+    {
+        this.ArmaAtual = this.armaDisparoEspalhado;
     }
 
     public ArmaBasica ArmaAtual

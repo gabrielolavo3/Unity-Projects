@@ -9,6 +9,7 @@ public abstract class PowerUpColetavel : MonoBehaviour
     [SerializeField] private int quantidadeTotalDePiscadas; // Defini quantas vezes o Sprite do PowerUp irá piscar antes da desaparecer
     [SerializeField] private float intervaloTempoEntrePiscadas; // Defini o tempo total para implementar todas as piscadas
     [SerializeField] private float reducaoTempoEntrePiscadas;
+    [SerializeField] private float duracaoEmSegundos; // Define a duração para cada powerUp
     private float contagemTempoAntesAutodestruicao; // Valor para verificar quanto tempo passou para começar a autodestruição
     private bool autodestruindo;
 
@@ -70,5 +71,13 @@ public abstract class PowerUpColetavel : MonoBehaviour
         } while (contador < quantidadeTotalDePiscadas);
 
         Destroy(gameObject);
+    }
+
+    public float DuracaoEmSegundos 
+    { 
+        get 
+        {
+            return duracaoEmSegundos;
+        }
     }
 }

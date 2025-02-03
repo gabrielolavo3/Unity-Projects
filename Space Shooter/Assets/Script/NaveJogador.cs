@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class NaveJogador : MonoBehaviour
 {
-    private const int QuantidadeMaximaVida = 5;
+    private const int QuantidadeMaximaVida = 5000;
     public new Rigidbody2D rigidbody; // Atributo do tipo Rigidbody2D para Fisica2D    
     public float velocidadeMovimento; // Variável para inserir o valor no Inspector    
     private int vidas;
     private GamerOver telaGamerOver;
     public SpriteRenderer spriteRenderer; // Variável para obter o Sprite do Jogador
+    public EfeitoPowerUp powerUpAtual;
     [SerializeField] private ControladorArma controladorArma;
     [SerializeField] private Escudo escudo;
 
@@ -24,7 +25,8 @@ public class NaveJogador : MonoBehaviour
         telaGamerOver = gamerOverObject.GetComponent<GamerOver>(); // Variável do tipo GamerOver recebendo o GameObject com a Tag e buscando o componente
         telaGamerOver.EsconderTela(); // Chama metodo para desativar a tela de GamerOver no inicio do Play
 
-        EquiparArmaDisparoAlternado(); // Defini a arma de ínicio
+        EquiparArmaDisparoEspalhado();
+        // EquiparArmaDisparoAlternado(); // Defini a arma de ínicio
         escudo.DesativarEscudo();
     }
 
@@ -40,6 +42,17 @@ public class NaveJogador : MonoBehaviour
 
         this.rigidbody.velocity = new Vector2(velocidadeX, velocidadeY); // Acessa a propriedade velocity de Rigidbody2D e passar um new Vector2 que recebe a posicao X e Y
         */
+
+        if (powerUpAtual != null) 
+        { 
+            powerUpAtual.AtualizarTempo();
+            
+            if (!powerUpAtual.VerificarAtivo) 
+            {
+                powerUpAtual.RemoverEfeito(this);
+                powerUpAtual = null;
+            }
+        }
         VerificarLimiteDaTela();
     }
 
@@ -55,10 +68,20 @@ public class NaveJogador : MonoBehaviour
         this.controladorArma.EquiparArmaDisparoDuplo();
     }
 
+    public void EquiparArmaDisparoEspalhado() 
+    {
+        this.controladorArma.EquiparArmaDisparoEspalhado();
+    }
+
     public void AtivandoEscudo() 
     {
         escudo.AtivarEscudo();
-    }   
+    } 
+    
+    public void DesativandoEscudo() 
+    {
+        escudo.DesativarEscudo();
+    }
 
     private void VerificarLimiteDaTela() 
     { 
@@ -164,7 +187,7 @@ public class NaveJogador : MonoBehaviour
         else if (collision.CompareTag("PowerUp")) 
         { 
             PowerUpColetavel powerUp = collision.GetComponent<PowerUpColetavel>();
-            ColetarPowerUpDisparoDuplo(powerUp);
+            ColetarPowerUp(powerUp);
         }
     }    
 
@@ -188,10 +211,16 @@ public class NaveJogador : MonoBehaviour
         itemVida.ColetarItem(); // Chama o método para destruir o item após a colisão com o Player
     }
     
-    private void ColetarPowerUpDisparoDuplo(PowerUpColetavel powerUp) // Variável para acessar a lista de powerUps
+    private void ColetarPowerUp(PowerUpColetavel powerUp) // Variável para acessar a lista de powerUps
     { 
+        if (powerUpAtual != null) 
+        { // Remove o efeito caso haja algum efeito aplicado
+            powerUpAtual.RemoverEfeito(this);
+        }
+
         EfeitoPowerUp efeitoPowerUp = powerUp.EfeitoPowerUp; 
-        efeitoPowerUp.AplicarEfeito(this); // Aplica o efeito no script do Jogador com o uso do This
+        efeitoPowerUp.AplicarEfeito(this); // Aplica o efeito no script do Jogador com o uso do This        
+        powerUpAtual = efeitoPowerUp;
         powerUp.ColetarPowerUp();
     }
 }

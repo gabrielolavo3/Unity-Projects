@@ -28,10 +28,10 @@ public abstract class ArmaBasica : MonoBehaviour
         }
     }
 
-    protected void CriarLaser(Vector2 posicao) 
+    protected Laser CriarLaser(Vector2 posicao) // Altera de void para Laser
     {
-        // Cria uma instância do Prefab do laser
-        Instantiate(laserPrefab, posicao, Quaternion.identity);
+        Laser laser = Instantiate(laserPrefab, posicao, Quaternion.identity);
+        return laser;
     }
 
     protected abstract void Atirar(); // O uso do abstract permite a alteração em classes que herdam dessa

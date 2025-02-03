@@ -9,7 +9,7 @@ public class Laser : MonoBehaviour
     
     void Start()
     {
-        rigidbody.velocity = new Vector2(0, velociaddeY);
+        Direcao = transform.up;
     }
 
     void Update()
@@ -22,6 +22,15 @@ public class Laser : MonoBehaviour
         {
             // Verifica se a posição Y do Laser na camêra é maior do que 1 e destrói o GameObject
             Destroy(this.gameObject, 0.5f);
+        }
+    }
+
+    public Vector2 Direcao
+    {
+        set 
+        {
+            transform.up = value;
+            rigidbody.velocity = transform.up * velociaddeY;
         }
     }
 
