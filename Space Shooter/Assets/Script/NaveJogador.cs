@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NaveJogador : MonoBehaviour
 {
-    private const int QuantidadeMaximaVida = 5000;
+    private const int QuantidadeMaximaVida = 5;
     public new Rigidbody2D rigidbody; // Atributo do tipo Rigidbody2D para Fisica2D    
     public float velocidadeMovimento; // Variável para inserir o valor no Inspector    
     private int vidas;
@@ -24,24 +24,22 @@ public class NaveJogador : MonoBehaviour
         GameObject gamerOverObject = GameObject.FindGameObjectWithTag("Gamer Over"); // Variável GameObject para buscar o 1º GameObject com a Tag "Gamer Over"        
         telaGamerOver = gamerOverObject.GetComponent<GamerOver>(); // Variável do tipo GamerOver recebendo o GameObject com a Tag e buscando o componente
         telaGamerOver.EsconderTela(); // Chama metodo para desativar a tela de GamerOver no inicio do Play
-
-        EquiparArmaDisparoEspalhado();
-        // EquiparArmaDisparoAlternado(); // Defini a arma de ínicio
+        
+        EquiparArmaDisparoAlternado(); // Defini a arma de ínicio
         escudo.DesativarEscudo();
     }
 
     // Update é chamado a cada frame
     void Update()
     {
-        /*
+        
         // Trecho que controla a movimentação do Player
-        float horizontal = Input.GetAxis("Horizontal"), // Recebe o clique das teclas A e D, do eixo horizontal
-              vertical = Input.GetAxis("Vertical"), // Recebe o clique das teclas W e S, do eixo vertical
-              velocidadeX = horizontal * this.velocidadeMovimento,
-              velocidadeY = vertical * this.velocidadeMovimento;
+        //float horizontal = Input.GetAxis("Horizontal"), // Recebe o clique das teclas A e D, do eixo horizontal
+        //      vertical = Input.GetAxis("Vertical"), // Recebe o clique das teclas W e S, do eixo vertical
+        //      velocidadeX = horizontal * this.velocidadeMovimento,
+        //      velocidadeY = vertical * this.velocidadeMovimento;
 
-        this.rigidbody.velocity = new Vector2(velocidadeX, velocidadeY); // Acessa a propriedade velocity de Rigidbody2D e passar um new Vector2 que recebe a posicao X e Y
-        */
+        //this.rigidbody.velocity = new Vector2(velocidadeX, velocidadeY); // Acessa a propriedade velocity de Rigidbody2D e passar um new Vector2 que recebe a posicao X e Y        
 
         if (powerUpAtual != null) 
         { 

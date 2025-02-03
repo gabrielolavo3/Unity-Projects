@@ -8,9 +8,11 @@ public class InGame : MonoBehaviour
     public Text textoPontuacao; // Váriavel que representa a o texto da pontuacao no Canva UI
     public BarraDeVida barraDeVida; // Variável de acesso ao script/class BarraDeVida
     private NaveJogador jogador; // Variável para ter a referência do jogador
+    [SerializeField] private TelaPause telaPause;
 
     void Start()
     {
+        telaPause.DesativarPause();
         // Usa a variável de NaveJogador para buscar pela tag Player e trazer o componente do objeto
         jogador = GameObject.FindGameObjectWithTag("Player").GetComponent<NaveJogador>();   
     }
@@ -23,5 +25,10 @@ public class InGame : MonoBehaviour
 
         // Acessa o script, chama o metodo ExibirVidas, passando a propriedade de acesso de NaveJogador
         barraDeVida.ExibirVidas(jogador.Vida);
+    }
+
+    public void PausarJogo()
+    {
+        telaPause.AtivarPause();
     }
 }

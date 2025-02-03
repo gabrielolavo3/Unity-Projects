@@ -13,6 +13,7 @@ public class ControladorArma : MonoBehaviour
     {
         this.armaDisparoAlternado.Desativar();
         this.armaDisparoDuplo.Desativar();
+        this.armaDisparoEspalhado.Desativar();
     }
 
     public void EquiparArmaDisparoAlternado() 
