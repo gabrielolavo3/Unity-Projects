@@ -9,6 +9,8 @@ public class Laser : MonoBehaviour
     
     void Start()
     {
+        ControladorAudio controladorAudio = GameObject.FindObjectOfType<ControladorAudio>(); // Busca por objetos ativos na cena com um determinado script
+        controladorAudio.TocarSomLaser();
         Direcao = transform.up;
     }
 

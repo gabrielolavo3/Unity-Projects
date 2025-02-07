@@ -39,6 +39,8 @@ public abstract class PowerUpColetavel : MonoBehaviour
 
     public void ColetarPowerUp() 
     { 
+        ControladorAudio controladorAudio = GameObject.FindObjectOfType<ControladorAudio>();
+        controladorAudio.TocarSomPowerUpColetavel();
         Destroy(gameObject); // Destroi o PowerUp
     }
 

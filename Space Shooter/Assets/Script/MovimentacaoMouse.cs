@@ -7,14 +7,13 @@ public class MovimentacaoMouse : MonoBehaviour
     [SerializeField] private Rigidbody2D rigidBodyJogador;
     [SerializeField] private float velocidadeMovimentacao;
     private Camera camera;
-    
-    // Start is called before the first frame update
+        
     void Start()
     {
         camera = Camera.main;
     }
-
-    // Update is called once per frame
+    
+    /*
     void Update()
     {
         Vector2 posicaoMouse = Input.mousePosition; // Obtém a posição atual do mouse
@@ -23,4 +22,5 @@ public class MovimentacaoMouse : MonoBehaviour
 
         rigidBodyJogador.position = novaPosicao; // Muda a posição do jogador para a posição atual do mouse
     }
+    */
 }

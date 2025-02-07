@@ -13,6 +13,7 @@ public class NaveJogador : MonoBehaviour
     public EfeitoPowerUp powerUpAtual;
     [SerializeField] private ControladorArma controladorArma;
     [SerializeField] private Escudo escudo;
+    private ControladorAudio controladorAudio;
 
     // Start é chamado uma única vez antes do primeiro frame
     void Start()
@@ -27,19 +28,21 @@ public class NaveJogador : MonoBehaviour
         
         EquiparArmaDisparoAlternado(); // Defini a arma de ínicio
         escudo.DesativarEscudo();
+        controladorAudio = GameObject.FindObjectOfType<ControladorAudio>(); // Busca na cena um objeto com o script ControladorAudio e traz a referência dele para NaveJogador
     }
 
     // Update é chamado a cada frame
     void Update()
     {
-        
         // Trecho que controla a movimentação do Player
-        //float horizontal = Input.GetAxis("Horizontal"), // Recebe o clique das teclas A e D, do eixo horizontal
-        //      vertical = Input.GetAxis("Vertical"), // Recebe o clique das teclas W e S, do eixo vertical
-        //      velocidadeX = horizontal * this.velocidadeMovimento,
-        //      velocidadeY = vertical * this.velocidadeMovimento;
+        float horizontal = Input.GetAxis("Horizontal"); // Recebe o clique das teclas A e D, do eixo horizontal
+        float vertical = Input.GetAxis("Vertical"); // Recebe o clique das teclas W e S, do eixo vertical
+        float velocidadeX = horizontal * this.velocidadeMovimento;
+        float velocidadeY = vertical * this.velocidadeMovimento;
 
-        //this.rigidbody.velocity = new Vector2(velocidadeX, velocidadeY); // Acessa a propriedade velocity de Rigidbody2D e passar um new Vector2 que recebe a posicao X e Y        
+        this.rigidbody.velocity = new Vector2(velocidadeX, velocidadeY); // Acessa a propriedade velocity de Rigidbody2D e passar um new Vector2 que recebe a posicao X e Y        
+
+        VerificarLimiteDaTela();
 
         if (powerUpAtual != null) 
         { 
@@ -50,8 +53,7 @@ public class NaveJogador : MonoBehaviour
                 powerUpAtual.RemoverEfeito(this);
                 powerUpAtual = null;
             }
-        }
-        VerificarLimiteDaTela();
+        }        
     }
 
     // Métodos para mudar a arma e permite acesso do PowerUp às armas, mesmo sem acesso ao ControladorArmas
@@ -84,15 +86,15 @@ public class NaveJogador : MonoBehaviour
     private void VerificarLimiteDaTela() 
     { 
         Vector2 posicaoAtualJogador = this.transform.position; // Recebe a posição em tempo real do jogador na cena
-        float metadeDaLargura = Largura / 2f, // Variáveis para fazer o posicionamento da nave para impedir que a nave saia do limite da camêra
-              metadeDaAltura = Altura / 2f;
+        float metadeDaLargura = Largura / 2f; // Variáveis para fazer o posicionamento da nave para impedir que a nave saia do limite da camêra
+        float metadeDaAltura = Altura / 2f;
 
         Camera camera = Camera.main; // Variável para a camêra principal
         Vector2 limiteInferiorEsquerdo = camera.ViewportToWorldPoint(Vector2.zero); // Recebe a posição do viewPort e converte para coordenadas 2d, junto com um array com posição (0,0)
         Vector2 limiteSuperiorDireito = camera.ViewportToWorldPoint(Vector2.one); // Recebe a posição do viewPort e converte para coordenadas 2d, junto com um array com posição (1,1)
 
-        float pontoDeReferenciaLadoEsquerdo = posicaoAtualJogador.x - metadeDaLargura,
-              pontoDeReferenciaLadoDireito = posicaoAtualJogador.x + metadeDaLargura;
+        float pontoDeReferenciaLadoEsquerdo = posicaoAtualJogador.x - metadeDaLargura;
+        float pontoDeReferenciaLadoDireito = posicaoAtualJogador.x + metadeDaLargura;
 
         // Verifica se o jogador saiu pela esquerda, analisando se a posição Horizontal é menor do que a posição Horizontal do Limite
         if (pontoDeReferenciaLadoEsquerdo < limiteInferiorEsquerdo.x) 
@@ -109,10 +111,10 @@ public class NaveJogador : MonoBehaviour
         posicaoAtualJogador = this.transform.position; // Atualiza a posição do jogador para verificar o superior e inferior porquê houve mudança na posição da esquerda e na direita
         // Esss trecho permite que o Player não saia pela diagonal
 
-        float pontDeReferencialLadoSuperior = posicaoAtualJogador.y + metadeDaAltura,
-              pontoDeReferenciaLadoInferior = posicaoAtualJogador.y - metadeDaAltura;
+        float pontoDeReferencialLadoSuperior = posicaoAtualJogador.y + metadeDaAltura;
+        float pontoDeReferenciaLadoInferior = posicaoAtualJogador.y - metadeDaAltura;
 
-        if (pontDeReferencialLadoSuperior > limiteSuperiorDireito.y) // Verifica a saida pelo lado de cima da camêra
+        if (pontoDeReferencialLadoSuperior > limiteSuperiorDireito.y) // Verifica a saida pelo lado de cima da camêra
         {
             transform.position = new Vector2(posicaoAtualJogador.x, limiteSuperiorDireito.y - metadeDaAltura);
         }
@@ -162,6 +164,7 @@ public class NaveJogador : MonoBehaviour
             { 
                 vidas = 0;
                 gameObject.SetActive(false); // Desativa o Inspector do Jogador
+                controladorAudio.TocarSomDerrotaJogador();
                 telaGamerOver.Exibir(); // Chama o método para mostrará a Tela de Gamer Over, pois a vida do Player zerou
             }
         }
@@ -193,10 +196,12 @@ public class NaveJogador : MonoBehaviour
     {
         if (escudo.VerificarEscudoAtivo) 
         {
+            controladorAudio.TocarSomDanoEscudo(); // Ativa o áudio
             escudo.ReceberDano();
         }
         else 
         {
+            controladorAudio.TocarSomDanoJogador();
             Vida--; // Decrementa a vida pois há um Set na Propriedade de Acesso        
         }
         

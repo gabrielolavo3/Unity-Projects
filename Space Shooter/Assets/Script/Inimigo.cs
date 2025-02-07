@@ -94,6 +94,9 @@ public class Inimigo : MonoBehaviour
             SoltarPowerUp();
         }
 
+        ControladorAudio controladorAudio = GameObject.FindObjectOfType<ControladorAudio>();
+        controladorAudio.TocarSomExplosaoInimigo();
+
         // Criando Instância da Particula, passando o Prefab, a posição do inimigo, a rotação padrão e atribuindo a variável do tipo ParticleSystem
         ParticleSystem particula =  Instantiate(particulaExplosaoPrefab, transform.position,Quaternion.identity);
         Debug.Log("Particula Gerada");
