@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 412846c406b00f042a86492621f960bf, type: 3}
+  m_Name: InimigoResistente
+  m_EditorClassIdentifier: 
+  velocidadeMinima: 1
+  velocidadeMaxima: 3
+  quantidadeMaximaVida: 5
+  chanceSoltarItemVida: 10
+  itemVidaPrefab: {fileID: 7410922684026823658, guid: a1f6b428a594a3b4eb64c19303e118a1, type: 3}
+  chanceSoltarPowerUp: 10
+  powerUpPrefabs:
+  - {fileID: 162331733925904197, guid: dc226aa00543d1c48b7156c3642da3df, type: 3}

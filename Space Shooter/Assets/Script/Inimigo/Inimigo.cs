@@ -5,17 +5,11 @@ using UnityEngine;
 public class Inimigo : MonoBehaviour
 {
     public new Rigidbody2D rigidbody;
-    public int quantVidaInimigo; // Variável para definir a quantidade de vida no inspecto
-    private float velocidadeY;
-    public float velocidadeMinima,
-                 velocidadeMaxima;
     public ParticleSystem particulaExplosaoPrefab; // Variável para atribuir o prefab da particula no Inspector
     public SpriteRenderer spriteRenderer; // Variável para atribuir o prefab de cada inimigo com o Script
-
-    [SerializeField] [Range(0, 100)] private float chanceSoltarItemVida; // O [Range(0, 100)] permite escolher um valor dentro do intervalo minímo (0) e máximo (100) no inspetor
-    [SerializeField] private ItemVida itemVidaPrefab; // Variável privada para aparece no inspecto por causa do SerializeField
-    [SerializeField] [Range(0, 100)] private float chanceSoltarPowerUp;
-    [SerializeField] private PowerUpColetavel[] powerUpPrefabs; // Recebe uma coleção de prefabs
+    private int vidas; // Variável para definir a quantidade de vida no inspecto
+    private float velocidadeY;
+    private PropriedadeInimigo propriedadesInimigo;
 
     void Start()
     {
@@ -38,9 +32,6 @@ public class Inimigo : MonoBehaviour
             float posicaoX = limiteSuperiorDireito.x - metadeDaLargura; // Subtração para fazer o Inimigo voltar ao limite da visão caso saia pela esquerda
             this.transform.position = new Vector2(posicaoX, posicaoAtual.y);
         }
-
-        // Gerando um número aleatório entre o valor minimo e maximo definido
-        velocidadeY = Random.Range(velocidadeMinima, velocidadeMaxima);
     }
 
     void Update()
@@ -60,11 +51,20 @@ public class Inimigo : MonoBehaviour
         }
     }
 
+    public void Configurar(PropriedadeInimigo propriedadeInimigo)
+    {
+        propriedadesInimigo = propriedadeInimigo;
+
+        // Gerando um número aleatório entre o valor minimo e maximo definido
+        velocidadeY = Random.Range(propriedadesInimigo.VelocidadeMinima, propriedadesInimigo.VelocidadeMaxima);
+        vidas = (int)propriedadeInimigo.QuantidadeMaximaVida; //Atribui a quantidade de vidas do inimigo a quantidade de vidas definida na propriedade
+    }
+
     // Método para retirar a vida do inimigo através da colisão de outros GameObjects
     public void ReceberDano()
     {
-        quantVidaInimigo--; // Decrementar 1 ponto de vida o inimigo
-        if (quantVidaInimigo <= 0) 
+        vidas--; // Decrementar 1 ponto de vida o inimigo
+        if (vidas <= 0) 
         {
             Destruir(true);
         }
@@ -109,10 +109,10 @@ public class Inimigo : MonoBehaviour
     { 
         float chanceAleatoria = Random.Range(0f, 100f);
 
-        if (chanceAleatoria <= chanceSoltarItemVida)
+        if (chanceAleatoria <= propriedadesInimigo.ChanceSoltarItemVida)            
         {
             // Cria uma instância do Prefab do ItemVida na posição que o inimigo foi derrotado
-            Instantiate(itemVidaPrefab, transform.position, Quaternion.identity);
+            Instantiate(propriedadesInimigo.ItemVidaPrefab, transform.position, Quaternion.identity);
         }
     }
 
@@ -120,8 +120,10 @@ public class Inimigo : MonoBehaviour
     {
         float chanceAleatoria = Random.Range(0f, 100f);
 
-        if (chanceAleatoria <= chanceSoltarPowerUp)
+        if (chanceAleatoria <= propriedadesInimigo.ChanceSoltarPowerUp)            
         {
+            PowerUpColetavel[] powerUpPrefabs = propriedadesInimigo.PowerUpPrefabs;
+
             int indiceAleatorioPowerUp = Random.Range(0, powerUpPrefabs.Length); // Gera um valor aleatório para escolher qual será o PowerUp dropado
             Instantiate(powerUpPrefabs[indiceAleatorioPowerUp], transform.position, Quaternion.identity); // Cria o PowerUp de acordo com a posição aleatória do indice
         }

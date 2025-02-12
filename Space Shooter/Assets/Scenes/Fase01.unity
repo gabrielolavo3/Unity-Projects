@@ -2524,8 +2524,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a2343e1012343b46a15b8ac0a9735b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inimigoPequenoPrefab: {fileID: 5522471475359546427, guid: ec858863c3140d544b0a2b2d25538e68, type: 3}
-  inimigoGrandePrefab: {fileID: 5522471475359546427, guid: a84fc3bf29c61e54e87cd4e16d4be34b, type: 3}
+  intervaloCriacaoInimigo: 1
+  configuracaoInimigos:
+  - {fileID: 11400000, guid: 1ba090bd4ab96e24290366be80b41419, type: 2}
+  - {fileID: 11400000, guid: b0815d24cbb4207448bc1168843d1157, type: 2}
+  - {fileID: 11400000, guid: bd62fabdc21ba8946afff1031eac4a2c, type: 2}
+  - {fileID: 11400000, guid: 9cde3748aa0e1654298097ac746ec82f, type: 2}
 --- !u!4 &1400692359
 Transform:
   m_ObjectHideFlags: 0
@@ -2535,7 +2539,7 @@ Transform:
   m_GameObject: {fileID: 1400692357}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5283585, y: -0.18173477, z: -9.9395275}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
