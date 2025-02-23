@@ -10,6 +10,7 @@ public class Inimigo : MonoBehaviour
     private int vidas; // Variável para definir a quantidade de vida no inspecto
     private float velocidadeY;
     private PropriedadeInimigo propriedadesInimigo;
+    private ControladorInimigo controladorInimigo;
 
     void Start()
     {
@@ -51,8 +52,9 @@ public class Inimigo : MonoBehaviour
         }
     }
 
-    public void Configurar(PropriedadeInimigo propriedadeInimigo)
+    public void Configurar(ControladorInimigo controladorInimigo, PropriedadeInimigo propriedadeInimigo)
     {
+        this.controladorInimigo = controladorInimigo;
         propriedadesInimigo = propriedadeInimigo;
 
         // Gerando um número aleatório entre o valor minimo e maximo definido
@@ -96,6 +98,8 @@ public class Inimigo : MonoBehaviour
 
         ControladorAudio controladorAudio = GameObject.FindObjectOfType<ControladorAudio>();
         controladorAudio.TocarSomExplosaoInimigo();
+
+        controladorInimigo.RemoverInimigo(this);
 
         // Criando Instância da Particula, passando o Prefab, a posição do inimigo, a rotação padrão e atribuindo a variável do tipo ParticleSystem
         ParticleSystem particula =  Instantiate(particulaExplosaoPrefab, transform.position,Quaternion.identity);
